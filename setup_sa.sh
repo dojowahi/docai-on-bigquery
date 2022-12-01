@@ -98,3 +98,5 @@ gcloud projects add-iam-policy-binding \
 $(gcloud config get-value project) \
 --member='serviceAccount:'${serviceAccountId} \
 --role='roles/storage.objectViewer'
+
+echo "export doc_sa=${doc_sa}" >> ~/docai-on-bigquery/config.sh
