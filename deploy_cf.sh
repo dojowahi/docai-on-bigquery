@@ -17,7 +17,7 @@ echo "Deploying Doc AI CF"
 
 cd ~/docai-on-bigquery/src/cloud-functions/docai
 
-gcloud functions deploy ${cf_docai} --entry-point get_doc --runtime python39 --trigger-http --allow-unauthenticated --project ${project_id} --service-account ${ee_sa} --gen2 --region ${REGION} --run-service-account ${doc_sa} --memory 256MB
+gcloud functions deploy ${cf_docai} --entry-point get_doc --runtime python39 --trigger-http --allow-unauthenticated --project ${project_id} --service-account ${doc_sa} --gen2 --region ${REGION} --run-service-account ${doc_sa} --memory 256MB
 
 
 
