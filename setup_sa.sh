@@ -103,7 +103,7 @@ echo "export doc_sa=${doc_sa}" >> ~/docai-on-bigquery/config.sh
 
 echo "Create bucket"
 
-BUCKET_NAME= ${PROJECT_ID}-docai-wahi
+BUCKET_NAME=${PROJECT_ID}-docai-wahi
 gcloud storage buckets create gs://${BUCKET_NAME}
 
 echo "Upload Sample files"
