@@ -27,7 +27,7 @@ endpoint_docai=$(gcloud functions describe ${cf_docai} --region=${REGION} --gen2
 bq mk -d docai
 
 
-build_sql="CREATE OR REPLACE FUNCTION docai.doc_extractor(uri STRING, mime_type STRING, location STRING,docai_processorId STRING) RETURNS STRING REMOTE WITH CONNECTION \`${project_id}.us.gcf-docai-conn\` OPTIONS ( endpoint = '${endpoint_docaii}')"
+build_sql="CREATE OR REPLACE FUNCTION docai.doc_extractor(uri STRING, mime_type STRING, location STRING,docai_processorId STRING) RETURNS STRING REMOTE WITH CONNECTION \`${project_id}.us.gcf-docai-conn\` OPTIONS ( endpoint = '${endpoint_docai}')"
 
     
 bq query --use_legacy_sql=false ${build_sql}
