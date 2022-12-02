@@ -20,7 +20,8 @@ def get_request(request):
     processor_type = 'EXPENSE_PROCESSOR'
     project_number = get_project_number(project_id)
     processor_id = create_processor_sample(project_number,location,processor_display_name,processor_type)
-    return processor_id
+    ret_val = "Processor Id created is " + str(processor_id)
+    return ret_val
 
 def get_project_number(project_id):
     """Given a project id, return the project number"""
