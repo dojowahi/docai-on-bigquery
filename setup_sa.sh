@@ -100,11 +100,3 @@ $(gcloud config get-value project) \
 --role='roles/storage.objectViewer'
 
 echo "export doc_sa=${doc_sa}" >> ~/docai-on-bigquery/config.sh
-
-echo "Create bucket"
-
-BUCKET_NAME=${PROJECT_ID}-docai-wahi
-gcloud storage buckets create gs://${BUCKET_NAME}
-
-echo "Upload Sample files"
-gsutil cp ~/docai-on-bigquery/src/data/* gs://${BUCKET_NAME}
