@@ -3,6 +3,7 @@ The goal of this demo is to run a BigQuery SQL and extract information from docu
 
 ## Requirements
 * Ensure the GCP user is allowed to create service accounts and assign roles
+* Ensure GCP project is enabled for using BQ object tables, if NOT manually create and load the tables
 
 
 ## Setting up the demo
