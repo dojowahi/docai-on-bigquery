@@ -49,7 +49,7 @@ bq query --use_legacy_sql=false ${build_sql}
 
 echo "Create bucket"
 
-BUCKET_NAME= ${PROJECT_ID}-docai-wahi
+BUCKET_NAME=${PROJECT_ID}-docai-wahi
 gcloud storage buckets create gs://${BUCKET_NAME}
 
 echo "Upload Sample files"
