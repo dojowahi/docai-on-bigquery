@@ -1,9 +1,9 @@
 # SQL over Docs
-The goal of this demo is to run a BigQuery SQL and extract information from documents
+The goal of this demo is to run a BigQuery SQL and extract information from documents.
 
 ## Requirements
 * Ensure the GCP user is allowed to create service accounts and assign roles
-* Ensure GCP project is enabled for using BQ object tables, if NOT manually create and load the tables
+* BQ object tables need to be enabled (as of 12/5/2022 they were in private preview), if you do not have access to enable object tables manually create and load the BQ tables
 
 
 ## Setting up the demo
