@@ -3,10 +3,12 @@
 ## Set these Variables
 ##
 ##################################################
+# shellcheck disable=SC1073,SC1072,SC1009
 # existing GCP user that will:
 # create the project
 # attach a billing id (needs to have permission)
 # and provision resources
+
 export USER_EMAIL=<insert gcp user email>
 
 # project id for your NEW GCP project
