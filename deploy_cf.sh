@@ -34,6 +34,7 @@ cd ~/docai-on-bigquery/src/cloud-functions/process_docai
 
 gcloud functions deploy ${cf_process_docai} --entry-point get_doc --runtime python39 --trigger-http --allow-unauthenticated --project ${project_id} --service-account ${doc_sa} --gen2 --region ${REGION} --run-service-account ${doc_sa} --memory 256MB
 
+echo "Processor Id ${processor_id} has been created"
 
 
 endpoint_parser_docai=$(gcloud functions describe ${cf_process_docai} --region=${REGION} --gen2 --format=json | jq -r '.serviceConfig.uri')
