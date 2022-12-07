@@ -57,10 +57,11 @@ def get_doc(request):
         print("Processor_id:",processor_id)
         print("Location:", location)
 
-        processor = f"projects/{project_number}/locations/{location}/processors/{processor_id}"
-        accepted_file_types = ["application/pdf","image/jpg","image/png","image/gif","image/tiff","image/jpeg","image/tif","image/webp","image/bmp"]
+        
+        accepted_file_types = {"application/pdf","image/png","image/gif","image/tiff","image/jpeg","image/webp","image/bmp"}
         opts = ClientOptions(api_endpoint=f"{location}-documentai.googleapis.com")
         docai_client = documentai.DocumentProcessorServiceClient(client_options=opts)
+        processor = docai_client.processor_path(project_number, location, processor_id)
 
         if content_type in accepted_file_types:
             file = get_gcs_file(uri)
