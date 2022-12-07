@@ -1,5 +1,5 @@
 import os
-from google.cloud import documentai_v1 as documentai
+from google.cloud import documentai
 from google.cloud import storage
 import re
 import urllib.request
@@ -58,7 +58,7 @@ def get_doc(request):
 
         processor = f"projects/{project_number}/locations/{location}/processors/{processor_id}"
         accepted_file_types = ["application/pdf","image/jpg","image/png","image/gif","image/tiff","image/jpeg","image/tif","image/webp","image/bmp"]
-        opts = {"api_endpoint": f"{location}-documentai.googleapis.com"}
+        opts = ClientOptions(api_endpoint=f"{location}-documentai.googleapis.com")
         docai_client = documentai.DocumentProcessorServiceClient(client_options=opts)
 
         if content_type in accepted_file_types:
