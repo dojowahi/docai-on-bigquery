@@ -10,9 +10,9 @@
 
 
 source ./config.sh
-gcloud auth login ${USER_EMAIL}
+gcloud auth login "${USER_EMAIL}"
 echo "Assigning IAM Permissions"
-gcloud config set project ${PROJECT_ID}
+gcloud config set project "${PROJECT_ID}"
 
 ##################################################
 ##
@@ -50,16 +50,16 @@ PROJECT_NUMBER=$(gcloud projects list --filter="project_id:${PROJECT_ID}"  --for
 SERVICE_ACCOUNT=${PROJECT_NUMBER}-compute@developer.gserviceaccount.com 
 echo "Compute engine SA - ${SERVICE_ACCOUNT}"
 
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-    --member=serviceAccount:${SERVICE_ACCOUNT} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member=serviceAccount:"${SERVICE_ACCOUNT}" \
     --role=roles/serviceusage.serviceUsageAdmin
     
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-    --member=serviceAccount:${SERVICE_ACCOUNT} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member=serviceAccount:"${SERVICE_ACCOUNT}" \
     --role=roles/storage.admin
     
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-    --member=serviceAccount:${SERVICE_ACCOUNT} \
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member=serviceAccount:"${SERVICE_ACCOUNT}" \
     --role=roles/documentai.admin
 
 
@@ -67,9 +67,7 @@ sleep 15
 
 
 
-# Cloud function setup for EE
-
-project_id=${PROJECT_ID}
+# Cloud function setup
 
 doc_sa=${SERVICE_ACCOUNT}
 
@@ -80,23 +78,23 @@ echo "Doc AI SA: ${doc_sa}"
 
 bq mk --connection --display_name='my_gcf-docai-conn' \
       --connection_type=CLOUD_RESOURCE \
-      --project_id=$(gcloud config get-value project) \
+      --project_id="$(gcloud config get-value project)" \
       --location=US  gcf-docai-conn
 
 #Get serviceAccountID associated with the connection  
 
-serviceAccountId=`bq show --location=US --connection --format=json gcf-docai-conn| jq -r '.cloudResource.serviceAccountId'`
+serviceAccountId=$(bq show --location=US --connection --format=json gcf-docai-conn| jq -r '.cloudResource.serviceAccountId')
 echo "Service Account: ${serviceAccountId}"
 
 # Add Cloud run admin
 gcloud projects add-iam-policy-binding \
-$(gcloud config get-value project) \
---member='serviceAccount:'${serviceAccountId} \
+"$(gcloud config get-value project)" \
+--member='serviceAccount:'"${serviceAccountId}" \
 --role='roles/run.admin'
 
 gcloud projects add-iam-policy-binding \
-$(gcloud config get-value project) \
---member='serviceAccount:'${serviceAccountId} \
+"$(gcloud config get-value project)" \
+--member='serviceAccount:'"${serviceAccountId}" \
 --role='roles/storage.objectViewer'
 
 echo "export doc_sa=${doc_sa}" >> ~/docai-on-bigquery/config.sh
