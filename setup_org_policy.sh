@@ -32,7 +32,7 @@ gcloud config set project ${PROJECT_ID}
 
 echo "Assigning billing account"
 
-gcloud billing projects link ${PROJECT_ID} --billing-account=${BILLING_ACCOUNT_ID}
+gcloud beta billing projects link ${PROJECT_ID} --billing-account=${BILLING_ACCOUNT_ID}
 
 ##################################################
 ##
@@ -42,23 +42,10 @@ gcloud billing projects link ${PROJECT_ID} --billing-account=${BILLING_ACCOUNT_I
 
 echo "Configuring org policies at project level"
 
-#enable VPC peering
 cat <<EOF > new_policy.yaml
 constraint: constraints/compute.restrictVpcPeering
 listPolicy:
     allValues: ALLOW
-constraint: constraints/compute.vmExternalIpAccess
-listPolicy:
-    allValues: ALLOW
-constraint: constraints/cloudfunctions.allowedIngressSettings
-listPolicy:
-    allValues: ALLOW
-constraint: constraints/iam.allowedPolicyMemberDomains
-listPolicy:
-    allValues: ALLOW
-constraint: constraints/iam.disableServiceAccountKeyCreation
-boolean_policy:
-    enforced: false
 EOF
 gcloud resource-manager org-policies set-policy \
     --project=${PROJECT_ID} new_policy.yaml
@@ -66,3 +53,39 @@ gcloud resource-manager org-policies set-policy \
 #disable the shielded vm requirement
 gcloud resource-manager org-policies disable-enforce \
     compute.requireShieldedVm --project=${PROJECT_ID}
+
+#allow external IPs for app engine
+    cat <<EOF > new_policy.yaml
+constraint: constraints/compute.vmExternalIpAccess
+listPolicy:
+    allValues: ALLOW
+EOF
+gcloud resource-manager org-policies set-policy  \
+    --project=${PROJECT_ID} new_policy.yaml
+
+#enable Cloud Function
+cat <<EOF > new_policy.yaml
+constraint: constraints/cloudfunctions.allowedIngressSettings
+listPolicy:
+    allValues: ALLOW
+EOF
+gcloud resource-manager org-policies set-policy \
+    --project=${PROJECT_ID} new_policy.yaml
+
+cat <<EOF > new_policy.yaml
+constraint: constraints/iam.allowedPolicyMemberDomains
+listPolicy:
+    allValues: ALLOW
+EOF
+gcloud resource-manager org-policies set-policy \
+    --project=${PROJECT_ID} new_policy.yaml    
+
+
+#enable Key creation
+cat <<EOF > new_policy.yaml
+constraint: constraints/iam.disableServiceAccountKeyCreation
+boolean_policy:
+    enforced: false
+EOF
+gcloud resource-manager org-policies set-policy \
+    --project=${PROJECT_ID} new_policy.yaml
