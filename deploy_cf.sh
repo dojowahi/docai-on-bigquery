@@ -6,7 +6,7 @@
 # Author: Ankur Wahi
 # Updated: 12/02/2022
 #####################################################################################################
-
+# shellcheck disable=SC2154,SC1091,SC2153
 source ./config.sh
 
 project_id=${PROJECT_ID}
@@ -18,6 +18,7 @@ echo "Deploying Doc AI CF"
 
 cd ~/docai-on-bigquery/src/cloud-functions/create_docai || exit
 
+# shellcheck disable=SC2154
 gcloud functions deploy ${cf_create_docai} --entry-point get_request --runtime python39 --trigger-http --allow-unauthenticated --project "${project_id}" --service-account "${doc_sa}" --gen2 --region "${REGION}" --run-service-account "${doc_sa}" --memory 256MB
 
 endpoint_create_docai=$(gcloud functions describe ${cf_create_docai} --region="${REGION}" --gen2 --format=json | jq -r '.serviceConfig.uri')
