@@ -36,7 +36,7 @@ sh deploy_cf.sh
 
 If the shell script has executed successfully,have a dataset docai and and a BQ object table repos should be created under your project in BigQuery along with a function doc_extractor
 <br/><br/>
-**Note: Your script will fail in creation of the BQ table project is not enabled to use object tables. Then you need to manually create the table and load pointers to the PDFs in GCS**
+**Note: Your script will fail in creation of the BQ table if the GCP project is not enabled to use object tables. You will need to manually create the table and load pointers to the PDFs in GCS**
 
 <br/><br/>
 ### Congrats! You just executed BigQuery SQL over Documents
