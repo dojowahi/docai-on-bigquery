@@ -116,5 +116,4 @@ def get_doc(request):
             error_response = [{'output': 'Cannot parse the file type'}]
             replies.append(error_response)
 
-    return json.dumps({'replies': [json.dumps(extracts)
-                      for extracts in replies]})
+    return {"replies": [extract for extract in replies]}
